@@ -9,6 +9,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -20,8 +22,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AppModule {
 
     @Provides @Singleton
-    public Retrofit provideRetrofit() {
+    public OkHttpClient provideOkHttpClient() {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        return okHttpClient;
+    }
+
+    @Provides @Singleton
+    public Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
+                .client(okHttpClient)
                 .baseUrl(TmdbApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

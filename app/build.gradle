@@ -26,6 +26,7 @@ dependencies {
         exclude group: 'com.google.code.findbugs'
     })
     compile 'com.android.support:design:26.+'
+    compile 'com.android.support:recyclerview-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 
@@ -34,7 +35,14 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     provided 'javax.annotation:jsr250-api:1.0'
+    //ButterKnife
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    //OkHttp
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    //RecyclerView divider
+    compile 'com.bignerdranch.android:simple-item-decoration:1.0.0'
 }

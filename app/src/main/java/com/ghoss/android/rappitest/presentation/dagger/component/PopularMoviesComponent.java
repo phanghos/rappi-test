@@ -2,7 +2,7 @@ package com.ghoss.android.rappitest.presentation.dagger.component;
 
 import com.ghoss.android.rappitest.presentation.dagger.CustomScope;
 import com.ghoss.android.rappitest.presentation.dagger.module.PopularMoviesModule;
-import com.ghoss.android.rappitest.presentation.view.activity.MainActivity;
+import com.ghoss.android.rappitest.presentation.view.fragment.PopularMoviesFragment;
 
 import dagger.Subcomponent;
 
@@ -14,5 +14,5 @@ import dagger.Subcomponent;
 @Subcomponent(modules = PopularMoviesModule.class)
 public interface PopularMoviesComponent {
 
-    void inject(MainActivity activity);
+    void inject(PopularMoviesFragment fragment);
 }

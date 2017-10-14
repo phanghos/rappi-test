@@ -11,7 +11,7 @@ import retrofit2.http.GET;
 
 public interface TmdbApi {
 
-    String BASE_URL = "https://themoviedb.org/3/";
+    String BASE_URL = "https://api.themoviedb.org/3/";
 
     @GET("movie/popular?api_key=93aea0c77bc168d8bbce3918cefefa45")
     Call<MovieResponseEntity> getPopularMovies();

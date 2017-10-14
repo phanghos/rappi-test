@@ -16,19 +16,19 @@ public class MovieEntityToMovieMapper {
         List<Movie> movies = new ArrayList<>();
         for (MovieEntity movieEntity : movieEntities) {
             Movie m = new Movie();
-            m.setAdult(m.getAdult());
-            m.setBackdropPath(m.getBackdropPath());
-            m.setId(m.getId());
-            m.setOriginalLanguage(m.getOriginalLanguage());
-            m.setOriginalTitle(m.getOriginalTitle());
-            m.setOverview(m.getOverview());
-            m.setPopularity(m.getPopularity());
-            m.setPosterPath(m.getPosterPath());
-            m.setReleaseDate(m.getReleaseDate());
-            m.setTitle(m.getTitle());
-            m.setVideo(m.getVideo());
-            m.setVoteAverage(m.getVoteAverage());
-            m.setVoteCount(m.getVoteCount());
+            m.setAdult(movieEntity.getAdult());
+            m.setBackdropPath(movieEntity.getBackdropPath());
+            m.setId(movieEntity.getId());
+            m.setOriginalLanguage(movieEntity.getOriginalLanguage());
+            m.setOriginalTitle(movieEntity.getOriginalTitle());
+            m.setOverview(movieEntity.getOverview());
+            m.setPopularity(movieEntity.getPopularity());
+            m.setPosterPath(movieEntity.getPosterPath());
+            m.setReleaseDate(movieEntity.getReleaseDate());
+            m.setTitle(movieEntity.getTitle());
+            m.setVideo(movieEntity.getVideo());
+            m.setVoteAverage(movieEntity.getVoteAverage());
+            m.setVoteCount(movieEntity.getVoteCount());
             movies.add(m);
         }
         return movies;
