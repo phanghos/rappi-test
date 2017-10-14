@@ -9,7 +9,7 @@ import java.util.List;
  * Created by rrtatasciore on 14/10/17.
  */
 
-public interface MoviesRepository {
+public interface PopularMoviesRepository {
 
     void getPopularMovies(UseCase.Callback<List<Movie>> callback);
 }

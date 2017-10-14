@@ -45,4 +45,40 @@ public class TmdbService {
             }
         });
     }
+
+    public void getTopRatedMovies(final UseCase.Callback<List<MovieEntity>> callback) {
+        api.getTopRatedMovies().enqueue(new Callback<MovieResponseEntity>() {
+            @Override
+            public void onResponse(Call<MovieResponseEntity> call, Response<MovieResponseEntity> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body().getResults());
+                } else {
+                    callback.onError(new TmdbApiException());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponseEntity> call, Throwable t) {
+                callback.onError(new TmdbApiException(t.getMessage()));
+            }
+        });
+    }
+
+    public void getUpcomingMovies(final UseCase.Callback<List<MovieEntity>> callback) {
+        api.getUpcomingMovies().enqueue(new Callback<MovieResponseEntity>() {
+            @Override
+            public void onResponse(Call<MovieResponseEntity> call, Response<MovieResponseEntity> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body().getResults());
+                } else {
+                    callback.onError(new TmdbApiException());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponseEntity> call, Throwable t) {
+                callback.onError(new TmdbApiException(t.getMessage()));
+            }
+        });
+    }
 }

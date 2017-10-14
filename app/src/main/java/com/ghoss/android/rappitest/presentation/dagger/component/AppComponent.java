@@ -18,4 +18,5 @@ public interface AppComponent {
     void inject(RappiApplication application);
 
     PopularMoviesComponent popularMoviesComponent();
+    TopRatedMoviesComponent topRatedMoviesComponent();
 }

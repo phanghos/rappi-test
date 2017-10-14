@@ -1,6 +1,7 @@
 package com.ghoss.android.rappitest.presentation.view.fragment;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 
 import com.ghoss.android.rappitest.presentation.presenter.BasePresenter;
 
@@ -34,6 +35,10 @@ public class BasePresenterFragment<P extends BasePresenter> extends Fragment {
         if (presenter != null) {
             presenter.destroy();
         }
+    }
+
+    public AppCompatActivity getBaseActivity() {
+        return (AppCompatActivity) getActivity();
     }
 
     public P getPresenter() {

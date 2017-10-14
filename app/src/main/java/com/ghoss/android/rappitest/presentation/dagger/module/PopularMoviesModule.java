@@ -2,10 +2,10 @@ package com.ghoss.android.rappitest.presentation.dagger.module;
 
 import com.ghoss.android.rappitest.data.entity.mapper.MovieEntityToMovieMapper;
 import com.ghoss.android.rappitest.data.net.TmdbService;
-import com.ghoss.android.rappitest.data.repository.MoviesRepositoryImpl;
+import com.ghoss.android.rappitest.data.repository.PopularMoviesRepositoryImpl;
 import com.ghoss.android.rappitest.domain.executor.JobExecutor;
 import com.ghoss.android.rappitest.domain.executor.MainThread;
-import com.ghoss.android.rappitest.domain.repository.MoviesRepository;
+import com.ghoss.android.rappitest.domain.repository.PopularMoviesRepository;
 import com.ghoss.android.rappitest.domain.usecase.GetPopularMoviesUseCase;
 import com.ghoss.android.rappitest.presentation.dagger.CustomScope;
 import com.ghoss.android.rappitest.presentation.presenter.PopularMoviesPresenter;
@@ -29,17 +29,17 @@ public class PopularMoviesModule {
 
     @Provides @CustomScope
     public GetPopularMoviesUseCase provideGetPopularMoviesUseCase(
-            MoviesRepository repository, JobExecutor jobExecutor, MainThread mainThread) {
+            PopularMoviesRepository repository, JobExecutor jobExecutor, MainThread mainThread) {
         return new GetPopularMoviesUseCase(repository, jobExecutor, mainThread);
-    }
-    
-    @Provides @CustomScope
-    public MovieEntityToMovieMapper provideMovieEntityToMovieMapper() {
-        return new MovieEntityToMovieMapper();
     }
 
     @Provides @CustomScope
-    public MoviesRepository provideMoviesRepository(TmdbService service, MovieEntityToMovieMapper mapper) {
-        return new MoviesRepositoryImpl(service, mapper);
+    public PopularMoviesRepository provideMoviesRepository(TmdbService service, MovieEntityToMovieMapper mapper) {
+        return new PopularMoviesRepositoryImpl(service, mapper);
+    }
+
+    @Provides @CustomScope
+    public MovieEntityToMovieMapper provideMovieEntityToMovieMapper() {
+        return new MovieEntityToMovieMapper();
     }
 }

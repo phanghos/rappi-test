@@ -3,29 +3,26 @@ package com.ghoss.android.rappitest.domain.usecase;
 import com.ghoss.android.rappitest.domain.executor.JobExecutor;
 import com.ghoss.android.rappitest.domain.executor.MainThread;
 import com.ghoss.android.rappitest.domain.model.Movie;
-import com.ghoss.android.rappitest.domain.repository.PopularMoviesRepository;
+import com.ghoss.android.rappitest.domain.repository.TopRatedMoviesRepository;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 /**
- * Created by rrtatasciore on 14/10/17.
+ * Created by roberto on 10/14/17.
  */
 
-public class GetPopularMoviesUseCase extends UseCase<Void, List<Movie>> {
+public class GetTopRatedMoviesUseCase extends UseCase<Void, List<Movie>> {
 
-    private PopularMoviesRepository repository;
+    private TopRatedMoviesRepository repository;
 
-    @Inject
-    public GetPopularMoviesUseCase(PopularMoviesRepository repository, JobExecutor jobExecutor, MainThread mainThread) {
+    public GetTopRatedMoviesUseCase(TopRatedMoviesRepository repository, JobExecutor jobExecutor, MainThread mainThread) {
         super(jobExecutor, mainThread);
         this.repository = repository;
     }
 
     @Override
     public void run() {
-        repository.getPopularMovies(new Callback<List<Movie>>() {
+        repository.getTopRatedMovies(new Callback<List<Movie>>() {
             @Override
             public void onSuccess(final List<Movie> result) {
                 mainThread.post(new Runnable() {
