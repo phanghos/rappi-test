@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -51,6 +52,12 @@ public class PopularMoviesPresenterImplTest {
     @Test
     public void getView_returnsCorrectView() {
         assertEquals(view, presenter.getView());
+    }
+
+    @Test
+    public void destroy_setsViewNull() {
+        presenter.destroy();
+        assertNull(presenter.getView());
     }
 
     @Test
