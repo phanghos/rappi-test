@@ -2,12 +2,9 @@ package com.ghoss.android.rappitest.presentation.presenter.impl;
 
 import android.support.annotation.VisibleForTesting;
 
-import com.ghoss.android.rappitest.domain.model.Movie;
 import com.ghoss.android.rappitest.domain.usecase.GetPopularMoviesUseCase;
-import com.ghoss.android.rappitest.domain.usecase.UseCase;
+import com.ghoss.android.rappitest.presentation.callback.ListMoviesCallback;
 import com.ghoss.android.rappitest.presentation.presenter.PopularMoviesPresenter;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -21,10 +18,12 @@ public class PopularMoviesPresenterImpl implements PopularMoviesPresenter {
 
     private PopularMoviesPresenter.View view;
     private GetPopularMoviesUseCase useCase;
+    private ListMoviesCallback callback;
 
     @Inject
-    public PopularMoviesPresenterImpl(GetPopularMoviesUseCase useCase) {
+    public PopularMoviesPresenterImpl(GetPopularMoviesUseCase useCase, ListMoviesCallback callback) {
         this.useCase = useCase;
+        this.callback = callback;
     }
 
     @Override
@@ -40,11 +39,13 @@ public class PopularMoviesPresenterImpl implements PopularMoviesPresenter {
     @Override
     public void destroy() {
         view = null;
+        callback.setView(null);
     }
 
     @Override
     public void setView(View view) {
         this.view = view;
+        this.callback.setView(view);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -54,20 +55,7 @@ public class PopularMoviesPresenterImpl implements PopularMoviesPresenter {
 
     @Override
     public void getPopularMovies() {
-        useCase.execute(null, new UseCase.Callback<List<Movie>>() {
-            @Override
-            public void onSuccess(List<Movie> result) {
-                if (view != null) {
-                    view.showPopularMovies(result);
-                }
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                if (view != null) {
-
-                }
-            }
-        });
+        view.showProgress();
+        useCase.execute(null, callback);
     }
 }

@@ -2,13 +2,14 @@ package com.ghoss.android.rappitest.presentation.presenter.impl;
 
 import com.ghoss.android.rappitest.domain.model.Movie;
 import com.ghoss.android.rappitest.domain.usecase.GetPopularMoviesUseCase;
-import com.ghoss.android.rappitest.domain.usecase.UseCase;
+import com.ghoss.android.rappitest.presentation.callback.ListMoviesCallback;
 import com.ghoss.android.rappitest.presentation.presenter.PopularMoviesPresenter;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -18,8 +19,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -35,10 +34,12 @@ public class PopularMoviesPresenterImplTest {
 
     @Mock PopularMoviesPresenter.View view;
 
+    @Spy ListMoviesCallback callback;
+
     @Before
     public void setUp() {
         initMocks(this);
-        presenter = new PopularMoviesPresenterImpl(useCase);
+        presenter = new PopularMoviesPresenterImpl(useCase, callback);
         presenter.setView(view);
     }
 
@@ -47,6 +48,7 @@ public class PopularMoviesPresenterImplTest {
         assertNotNull(presenter);
         assertNotNull(useCase);
         assertNotNull(view);
+        assertNotNull(callback);
     }
 
     @Test
@@ -63,7 +65,6 @@ public class PopularMoviesPresenterImplTest {
     @Test
     public void getPopularMovies_onSuccess() {
         //Given
-        final UseCase.Callback<List<Movie>> callback = mock(UseCase.Callback.class);
         Movie m = new Movie();
         final List<Movie> list = new ArrayList<>();
         list.add(m);
@@ -74,20 +75,21 @@ public class PopularMoviesPresenterImplTest {
                 callback.onSuccess(list);
                 return null;
             }
-        }).when(useCase).execute(any(Void.class), any(UseCase.Callback.class));
+        }).when(useCase).execute(null, callback);
 
         //When
         presenter.getPopularMovies();
 
         //Then
-        verify(useCase, times(1)).execute(any(Void.class), any(UseCase.Callback.class));
+        verify(useCase, times(1)).execute(null, callback);
         verify(callback, times(1)).onSuccess(list);
+        verify(view, times(1)).showProgress();
+        verify(view, times(1)).hideProgress();
     }
 
     @Test
     public void getPopularMovies_onError() {
         //Given
-        final UseCase.Callback<List<Movie>> callback = mock(UseCase.Callback.class);
         final Throwable t = new Throwable();
 
         Mockito.doAnswer(new Answer() {
@@ -96,13 +98,15 @@ public class PopularMoviesPresenterImplTest {
                 callback.onError(t);
                 return null;
             }
-        }).when(useCase).execute(any(Void.class), any(UseCase.Callback.class));
+        }).when(useCase).execute(null, callback);
 
         //When
         presenter.getPopularMovies();
 
         //Then
-        verify(useCase, times(1)).execute(any(Void.class), any(UseCase.Callback.class));
+        verify(useCase, times(1)).execute(null, callback);
         verify(callback, times(1)).onError(t);
+        verify(view, times(1)).showProgress();
+        verify(view, times(1)).hideProgress();
     }
 }

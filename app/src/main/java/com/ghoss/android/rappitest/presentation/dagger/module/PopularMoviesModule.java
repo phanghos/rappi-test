@@ -7,6 +7,7 @@ import com.ghoss.android.rappitest.domain.executor.JobExecutor;
 import com.ghoss.android.rappitest.domain.executor.MainThread;
 import com.ghoss.android.rappitest.domain.repository.PopularMoviesRepository;
 import com.ghoss.android.rappitest.domain.usecase.GetPopularMoviesUseCase;
+import com.ghoss.android.rappitest.presentation.callback.ListMoviesCallback;
 import com.ghoss.android.rappitest.presentation.dagger.CustomScope;
 import com.ghoss.android.rappitest.presentation.presenter.PopularMoviesPresenter;
 import com.ghoss.android.rappitest.presentation.presenter.impl.PopularMoviesPresenterImpl;
@@ -21,10 +22,14 @@ import dagger.Provides;
 @Module
 public class PopularMoviesModule {
 
-    @Provides
-    @CustomScope
-    public PopularMoviesPresenter providePopularMoviesPresenter(GetPopularMoviesUseCase useCase) {
-        return new PopularMoviesPresenterImpl(useCase);
+    @Provides @CustomScope
+    public ListMoviesCallback provideListMoviesCallback() {
+        return new ListMoviesCallback();
+    }
+
+    @Provides @CustomScope
+    public PopularMoviesPresenter providePopularMoviesPresenter(GetPopularMoviesUseCase useCase, ListMoviesCallback callback) {
+        return new PopularMoviesPresenterImpl(useCase, callback);
     }
 
     @Provides @CustomScope
