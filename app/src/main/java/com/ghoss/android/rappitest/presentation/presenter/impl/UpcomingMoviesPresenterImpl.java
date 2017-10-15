@@ -3,6 +3,7 @@ package com.ghoss.android.rappitest.presentation.presenter.impl;
 import com.ghoss.android.rappitest.domain.model.Movie;
 import com.ghoss.android.rappitest.domain.usecase.GetUpcomingMoviesUseCase;
 import com.ghoss.android.rappitest.domain.usecase.UseCase;
+import com.ghoss.android.rappitest.presentation.callback.ListMoviesCallback;
 import com.ghoss.android.rappitest.presentation.presenter.UpcomingMoviesPresenter;
 
 import java.util.List;
@@ -17,10 +18,12 @@ public class UpcomingMoviesPresenterImpl implements UpcomingMoviesPresenter {
 
     private UpcomingMoviesPresenter.View view;
     private GetUpcomingMoviesUseCase useCase;
+    private ListMoviesCallback callback;
 
     @Inject
-    public UpcomingMoviesPresenterImpl(GetUpcomingMoviesUseCase useCase) {
+    public UpcomingMoviesPresenterImpl(GetUpcomingMoviesUseCase useCase, ListMoviesCallback callback) {
         this.useCase = useCase;
+        this.callback = callback;
     }
 
     @Override
@@ -36,29 +39,18 @@ public class UpcomingMoviesPresenterImpl implements UpcomingMoviesPresenter {
     @Override
     public void destroy() {
         view = null;
+        callback.setView(null);
     }
 
     @Override
     public void setView(View view) {
         this.view = view;
+        this.callback.setView(view);
     }
 
     @Override
     public void getUpcomingMovies() {
-        useCase.execute(null, new UseCase.Callback<List<Movie>>() {
-            @Override
-            public void onSuccess(List<Movie> result) {
-                if (view != null) {
-                    view.showUpcomingMovies(result);
-                }
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                if (view != null) {
-
-                }
-            }
-        });
+        view.showProgress();
+        useCase.execute(null, callback);
     }
 }

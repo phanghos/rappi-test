@@ -7,6 +7,7 @@ import com.ghoss.android.rappitest.domain.executor.JobExecutor;
 import com.ghoss.android.rappitest.domain.executor.MainThread;
 import com.ghoss.android.rappitest.domain.repository.UpcomingMoviesRepository;
 import com.ghoss.android.rappitest.domain.usecase.GetUpcomingMoviesUseCase;
+import com.ghoss.android.rappitest.presentation.callback.ListMoviesCallback;
 import com.ghoss.android.rappitest.presentation.dagger.CustomScope;
 import com.ghoss.android.rappitest.presentation.presenter.UpcomingMoviesPresenter;
 import com.ghoss.android.rappitest.presentation.presenter.impl.UpcomingMoviesPresenterImpl;
@@ -22,8 +23,14 @@ import dagger.Provides;
 public class UpcomingMoviesModule {
 
     @Provides @CustomScope
-    public UpcomingMoviesPresenter provideUpcomingMoviesPresenter(GetUpcomingMoviesUseCase useCase) {
-        return new UpcomingMoviesPresenterImpl(useCase);
+    public ListMoviesCallback provideListMoviesCallback() {
+        return new ListMoviesCallback();
+    }
+
+    @Provides @CustomScope
+    public UpcomingMoviesPresenter provideUpcomingMoviesPresenter(
+            GetUpcomingMoviesUseCase useCase, ListMoviesCallback callback) {
+        return new UpcomingMoviesPresenterImpl(useCase, callback);
     }
 
     @Provides @CustomScope
@@ -33,7 +40,8 @@ public class UpcomingMoviesModule {
     }
 
     @Provides @CustomScope
-    public UpcomingMoviesRepository provideUpcomingMoviesRepository(TmdbService service, MovieEntityToMovieMapper mapper) {
+    public UpcomingMoviesRepository provideUpcomingMoviesRepository(
+            TmdbService service, MovieEntityToMovieMapper mapper) {
         return new UpcomingMoviesRepositoryImpl(service, mapper);
     }
 

@@ -80,7 +80,7 @@ public class TopRatedMoviesFragment extends BasePresenterFragment<TopRatedMovies
     }
 
     @Override
-    public void showTopRatedMovies(List<Movie> movies) {
+    public void showMovies(List<Movie> movies) {
         if (movieAdapter == null) {
             movieAdapter = new MovieAdapter(movies);
             recyclerView.setAdapter(movieAdapter);

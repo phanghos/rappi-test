@@ -7,6 +7,7 @@ import com.ghoss.android.rappitest.domain.executor.JobExecutor;
 import com.ghoss.android.rappitest.domain.executor.MainThread;
 import com.ghoss.android.rappitest.domain.repository.TopRatedMoviesRepository;
 import com.ghoss.android.rappitest.domain.usecase.GetTopRatedMoviesUseCase;
+import com.ghoss.android.rappitest.presentation.callback.ListMoviesCallback;
 import com.ghoss.android.rappitest.presentation.dagger.CustomScope;
 import com.ghoss.android.rappitest.presentation.presenter.TopRatedMoviesPresenter;
 import com.ghoss.android.rappitest.presentation.presenter.impl.TopRatedMoviesPresenterImpl;
@@ -22,8 +23,14 @@ import dagger.Provides;
 public class TopRatedMoviesModule {
 
     @Provides @CustomScope
-    public TopRatedMoviesPresenter provideTopRatedMoviesPresenter(GetTopRatedMoviesUseCase useCase) {
-        return new TopRatedMoviesPresenterImpl(useCase);
+    public ListMoviesCallback provideListMoviesCallback() {
+        return new ListMoviesCallback();
+    }
+
+    @Provides @CustomScope
+    public TopRatedMoviesPresenter provideTopRatedMoviesPresenter(
+            GetTopRatedMoviesUseCase useCase, ListMoviesCallback callback) {
+        return new TopRatedMoviesPresenterImpl(useCase, callback);
     }
 
     @Provides @CustomScope
@@ -33,7 +40,8 @@ public class TopRatedMoviesModule {
     }
 
     @Provides @CustomScope
-    public TopRatedMoviesRepository provideTopRatedMoviesRepository(TmdbService service, MovieEntityToMovieMapper mapper) {
+    public TopRatedMoviesRepository provideTopRatedMoviesRepository(
+            TmdbService service, MovieEntityToMovieMapper mapper) {
         return new TopRatedMoviesRepositoryImpl(service, mapper);
     }
 

@@ -28,7 +28,8 @@ public class PopularMoviesModule {
     }
 
     @Provides @CustomScope
-    public PopularMoviesPresenter providePopularMoviesPresenter(GetPopularMoviesUseCase useCase, ListMoviesCallback callback) {
+    public PopularMoviesPresenter providePopularMoviesPresenter(
+            GetPopularMoviesUseCase useCase, ListMoviesCallback callback) {
         return new PopularMoviesPresenterImpl(useCase, callback);
     }
 

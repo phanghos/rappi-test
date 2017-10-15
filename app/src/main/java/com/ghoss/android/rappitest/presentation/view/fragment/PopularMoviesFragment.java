@@ -88,7 +88,7 @@ public class PopularMoviesFragment extends BasePresenterFragment<PopularMoviesPr
     }
 
     @Override
-    public void showPopularMovies(List<Movie> movies) {
+    public void showMovies(List<Movie> movies) {
         if (movieAdapter == null) {
             movieAdapter = new MovieAdapter(movies);
             recyclerView.setAdapter(movieAdapter);

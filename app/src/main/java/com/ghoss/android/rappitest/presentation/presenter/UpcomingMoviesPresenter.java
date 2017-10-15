@@ -2,6 +2,7 @@ package com.ghoss.android.rappitest.presentation.presenter;
 
 import com.ghoss.android.rappitest.domain.model.Movie;
 import com.ghoss.android.rappitest.presentation.view.BaseView;
+import com.ghoss.android.rappitest.presentation.view.ListMoviesView;
 
 import java.util.List;
 
@@ -11,13 +12,8 @@ import java.util.List;
 
 public interface UpcomingMoviesPresenter extends BasePresenter<UpcomingMoviesPresenter.View> {
 
-    interface View extends BaseView {
+    interface View extends ListMoviesView {
 
-        void showProgress();
-
-        void hideProgress();
-
-        void showUpcomingMovies(List<Movie> movies);
     }
 
     void getUpcomingMovies();
