@@ -1,5 +1,7 @@
 package com.ghoss.android.rappitest.presentation.presenter.impl;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.ghoss.android.rappitest.domain.model.Movie;
 import com.ghoss.android.rappitest.domain.usecase.GetPopularMoviesUseCase;
 import com.ghoss.android.rappitest.domain.usecase.UseCase;
@@ -43,6 +45,11 @@ public class PopularMoviesPresenterImpl implements PopularMoviesPresenter {
     @Override
     public void setView(View view) {
         this.view = view;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public View getView() {
+        return view;
     }
 
     @Override
