@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import com.ghoss.android.rappitest.R;
 import com.ghoss.android.rappitest.presentation.view.fragment.PopularMoviesFragment;
 import com.ghoss.android.rappitest.presentation.view.fragment.TopRatedMoviesFragment;
+import com.ghoss.android.rappitest.presentation.view.fragment.UpcomingMoviesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         pagerAdapter.add("Popular", PopularMoviesFragment.newInstance());
         pagerAdapter.add("Top Rated", TopRatedMoviesFragment.newInstance());
-        pagerAdapter.add("Upcoming", PopularMoviesFragment.newInstance());
+        pagerAdapter.add("Upcoming", UpcomingMoviesFragment.newInstance());
         viewPager.setAdapter(pagerAdapter);
     }
 

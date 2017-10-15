@@ -1,6 +1,5 @@
 package com.ghoss.android.rappitest.presentation.view.fragment;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,6 +39,14 @@ public class TopRatedMoviesFragment extends BasePresenterFragment<TopRatedMovies
         return new TopRatedMoviesFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((RappiApplication) getActivity().getApplication())
+                .getComponent().topRatedMoviesComponent().inject(this);
+        setPresenter(presenter);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,18 +58,15 @@ public class TopRatedMoviesFragment extends BasePresenterFragment<TopRatedMovies
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        ((RappiApplication) getActivity().getApplication())
-                .getComponent().topRatedMoviesComponent().inject(this);
-        setPresenter(presenter);
-        getPresenter().setView(this);
+    public void onStart() {
+        super.onStart();
+        getPresenter().getTopRatedMovies();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getPresenter().getTopRatedMovies();
+        getPresenter().setView(this);
     }
 
     @Override
@@ -81,7 +85,7 @@ public class TopRatedMoviesFragment extends BasePresenterFragment<TopRatedMovies
             movieAdapter = new MovieAdapter(movies);
             recyclerView.setAdapter(movieAdapter);
         } else {
-
+            recyclerView.setAdapter(movieAdapter);
         }
     }
 }

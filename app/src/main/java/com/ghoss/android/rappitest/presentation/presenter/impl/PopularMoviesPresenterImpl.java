@@ -38,7 +38,6 @@ public class PopularMoviesPresenterImpl implements PopularMoviesPresenter {
     @Override
     public void destroy() {
         view = null;
-        useCase = null;
     }
 
     @Override

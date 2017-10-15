@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import com.dgreenhalgh.android.simpleitemdecoration.linear.DividerItemDecoration
 import com.ghoss.android.rappitest.R;
 import com.ghoss.android.rappitest.domain.model.Movie;
 import com.ghoss.android.rappitest.presentation.RappiApplication;
-import com.ghoss.android.rappitest.presentation.presenter.PopularMoviesPresenter;
+import com.ghoss.android.rappitest.presentation.presenter.UpcomingMoviesPresenter;
 import com.ghoss.android.rappitest.presentation.view.adapter.MovieAdapter;
 
 import java.util.List;
@@ -28,25 +27,23 @@ import butterknife.ButterKnife;
  * Created by roberto on 10/14/17.
  */
 
-public class PopularMoviesFragment extends BasePresenterFragment<PopularMoviesPresenter> implements PopularMoviesPresenter.View {
+public class UpcomingMoviesFragment extends BasePresenterFragment<UpcomingMoviesPresenter> implements UpcomingMoviesPresenter.View {
 
-    private static final String TAG = PopularMoviesFragment.class.getSimpleName();
-
-    @Inject PopularMoviesPresenter presenter;
+    @Inject UpcomingMoviesPresenter presenter;
 
     MovieAdapter movieAdapter;
 
     @BindView(R.id.list) RecyclerView recyclerView;
 
-    public static PopularMoviesFragment newInstance() {
-        return new PopularMoviesFragment();
+    public static UpcomingMoviesFragment newInstance() {
+        return new UpcomingMoviesFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((RappiApplication) getActivity().getApplication())
-                .getComponent().popularMoviesComponent().inject(this);
+                .getComponent().upcomingMoviesComponent().inject(this);
         setPresenter(presenter);
     }
 
@@ -63,7 +60,7 @@ public class PopularMoviesFragment extends BasePresenterFragment<PopularMoviesPr
     @Override
     public void onStart() {
         super.onStart();
-        getPresenter().getPopularMovies();
+        getPresenter().getUpcomingMovies();
     }
 
     @Override
@@ -73,22 +70,17 @@ public class PopularMoviesFragment extends BasePresenterFragment<PopularMoviesPr
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
     public void showProgress() {
-        Log.d(TAG, "Loading");
+
     }
 
     @Override
     public void hideProgress() {
-        Log.d(TAG, "Finished");
+
     }
 
     @Override
-    public void showPopularMovies(List<Movie> movies) {
+    public void showUpcomingMovies(List<Movie> movies) {
         if (movieAdapter == null) {
             movieAdapter = new MovieAdapter(movies);
             recyclerView.setAdapter(movieAdapter);

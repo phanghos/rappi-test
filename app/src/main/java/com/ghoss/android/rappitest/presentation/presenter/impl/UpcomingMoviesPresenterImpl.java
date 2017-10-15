@@ -36,7 +36,6 @@ public class UpcomingMoviesPresenterImpl implements UpcomingMoviesPresenter {
     @Override
     public void destroy() {
         view = null;
-        useCase = null;
     }
 
     @Override

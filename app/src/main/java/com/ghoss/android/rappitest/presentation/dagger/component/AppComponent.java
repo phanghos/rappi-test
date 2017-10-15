@@ -19,4 +19,5 @@ public interface AppComponent {
 
     PopularMoviesComponent popularMoviesComponent();
     TopRatedMoviesComponent topRatedMoviesComponent();
+    UpcomingMoviesComponent upcomingMoviesComponent();
 }
